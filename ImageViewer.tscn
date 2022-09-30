@@ -4,47 +4,45 @@
 [ext_resource type="Script" path="res://ImageViewer.gd" id="1_12ep0"]
 [ext_resource type="Texture2D" uid="uid://bduw8wcoj5kk7" path="res://Icons/Kenney/gameicons/PNG/White/1x/information.png" id="3_j4saj"]
 
-[node name="Control" type="Panel" node_paths=PackedStringArray("ui_image", "ui_image_container", "ui_image_info")]
+[node name="Control" type="Panel" node_paths=PackedStringArray("ui_image", "ui_image_info")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_12ep0")
-ui_image = NodePath("ScrollContainer/HBoxContainer/HBoxContainer/TextureRect")
-ui_image_container = NodePath("ScrollContainer/HBoxContainer/HBoxContainer")
+ui_image = NodePath("HBoxContainer/ScrollContainer/TextureRect")
 ui_image_info = NodePath("Control/VBoxContainer")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+layout_mode = 2
 offset_right = 1152.0
 offset_bottom = 648.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/ScrollContainer"]
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer"]
-offset_right = 1152.0
-offset_bottom = 648.0
-size_flags_horizontal = 3
-alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/HBoxContainer"]
-offset_right = 1152.0
-offset_bottom = 648.0
-size_flags_horizontal = 3
 ignore_texture_size = true
 stretch_mode = 3
 
 [node name="Control" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -53,6 +51,7 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="VBoxContainer" parent="Control" instance=ExtResource("1_0bt6e")]
+layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
 offset_right = 400.0
@@ -60,6 +59,7 @@ grow_horizontal = 0
 
 [node name="InfoButton" type="TextureButton" parent="Control"]
 custom_minimum_size = Vector2i(32, 32)
+layout_mode = 0
 offset_left = -38.0
 offset_top = 8.0
 offset_right = -6.0
@@ -68,4 +68,5 @@ texture_normal = ExtResource("3_j4saj")
 ignore_texture_size = true
 stretch_mode = 0
 
+[connection signal="resized" from="HBoxContainer/ScrollContainer" to="." method="_on_image_container_resized"]
 [connection signal="pressed" from="Control/InfoButton" to="." method="_on_info_button_pressed"]

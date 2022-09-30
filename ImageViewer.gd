@@ -1,7 +1,6 @@
 extends Panel
 
 @export var ui_image:TextureRect
-@export var ui_image_container:Container
 @export var ui_image_info:Control
 
 var image:Image = Image.new()
@@ -9,6 +8,18 @@ var zoom_amount:Vector2 = Vector2(0.1,0.1)
 
 func report_error(message:String):
 	printerr(message)
+
+func _handle_picture_size():
+	if ui_image.texture == null:
+		return
+	var texture_size:Vector2i = ui_image.texture.get_size()
+	var container_size:Vector2i = Vector2i(ui_image.get_parent().size)
+	# Make sure the image is stretched correctly if it's too big, by default
+	if Vector2i(min(texture_size.x, container_size.x), min(texture_size.y, container_size.y)) != texture_size:
+		ui_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	else:
+		ui_image.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	ui_image.pivot_offset = container_size / 2
 
 func show_image(image_data:PackedByteArray):
 	if not PNGHelper.is_valid_png_header(image_data):
@@ -19,7 +30,7 @@ func show_image(image_data:PackedByteArray):
 		return
 
 	ui_image.scale = Vector2.ONE
-	ui_image.pivot_offset = ui_image.size / 2
+
 	var texture = ui_image.texture
 	var image_size:Vector2i = Vector2i(image.get_size())
 
@@ -31,13 +42,7 @@ func show_image(image_data:PackedByteArray):
 		else:
 			ui_image.texture.set_image(image)
 
-	var container_size:Vector2i = Vector2i(get_parent().size)
-	# Make sure the image is stretched correctly if it's too big, by default
-	if Vector2i(min(image_size.x, container_size.x), min(image_size.y, container_size.y)) != image_size:
-		ui_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	else:
-		ui_image.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
-
+	_handle_picture_size()
 	ui_image_info.show_data(image_data)
 
 func show_image_file(filepath:String):
@@ -98,3 +103,9 @@ func _unhandled_input(event):
 	if input_handled:
 		get_viewport().set_input_as_handled()
 
+
+
+func _on_image_container_resized():
+	print("Resized")
+	_handle_picture_size()
+	pass # Replace with function body.
