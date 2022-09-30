@@ -1,0 +1,133 @@
+[gd_scene load_steps=10 format=3 uid="uid://b31fss78fbwsx"]
+
+[ext_resource type="FontFile" uid="uid://blcfklfdxi1qo" path="res://Fonts/NotoSansCJKjp-Bold.otf" id="1_jgmoc"]
+[ext_resource type="PackedScene" uid="uid://dixkmi5hkalmh" path="res://ImageViewer.tscn" id="1_r80mi"]
+[ext_resource type="Script" path="res://main_ui.gd" id="1_vriff"]
+[ext_resource type="Texture2D" uid="uid://n6molrtm6w38" path="res://Icons/Kenney/gameicons/PNG/White/1x/backward.png" id="2_txai6"]
+[ext_resource type="Texture2D" uid="uid://bou2sxted5u6m" path="res://Icons/Kenney/gameicons/PNG/White/1x/forward.png" id="3_tagoi"]
+
+[sub_resource type="SystemFont" id="SystemFont_41yga"]
+subpixel_positioning = 0
+fallbacks = [ExtResource("1_jgmoc")]
+
+[sub_resource type="Theme" id="Theme_1r582"]
+default_font = SubResource("SystemFont_41yga")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uosrk"]
+bg_color = Color(0, 0, 0, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icec3"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.133333, 0.133333, 0.133333, 1)
+corner_detail = 1
+
+[node name="MainUI" type="Panel" node_paths=PackedStringArray("ui_image_viewer", "ui_button_next_image", "ui_button_previous_image")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_1r582")
+script = ExtResource("1_vriff")
+ui_image_viewer = NodePath("VBox/Control")
+ui_button_next_image = NodePath("VBox/Panel/MarginContainer/HBoxContainer/PreviousImage")
+ui_button_previous_image = NodePath("VBox/Panel/MarginContainer/HBoxContainer/NextImage")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="VBox"]
+custom_minimum_size = Vector2i(0, 48)
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 48.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_uosrk")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBox/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox/Panel/MarginContainer"]
+layout_mode = 2
+offset_left = 16.0
+offset_right = 1136.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="PreviousImage" type="TextureButton" parent="VBox/Panel/MarginContainer/HBoxContainer"]
+modulate = Color(0.0980392, 0.0980392, 0.0980392, 1)
+custom_minimum_size = Vector2i(32, 32)
+layout_mode = 2
+offset_top = 8.0
+offset_right = 32.0
+offset_bottom = 40.0
+size_flags_vertical = 4
+disabled = true
+texture_normal = ExtResource("2_txai6")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox/Panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+offset_left = 36.0
+offset_right = 1084.0
+offset_bottom = 48.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="MenuButton" type="Label" parent="VBox/Panel/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+offset_left = 408.0
+offset_top = 11.0
+offset_right = 640.0
+offset_bottom = 37.0
+text = "Stable Diffusion Image Viewer"
+
+[node name="NextImage" type="TextureButton" parent="VBox/Panel/MarginContainer/HBoxContainer"]
+modulate = Color(0.0980392, 0.0980392, 0.0980392, 1)
+custom_minimum_size = Vector2i(32, 32)
+layout_mode = 2
+offset_left = 1088.0
+offset_top = 8.0
+offset_right = 1120.0
+offset_bottom = 40.0
+size_flags_vertical = 4
+disabled = true
+texture_normal = ExtResource("3_tagoi")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Control" parent="VBox" instance=ExtResource("1_r80mi")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 52.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_icec3")
+
+[connection signal="pressed" from="VBox/Panel/MarginContainer/HBoxContainer/PreviousImage" to="." method="_on_previous_image_pressed"]
+[connection signal="pressed" from="VBox/Panel/MarginContainer/HBoxContainer/NextImage" to="." method="_on_next_image_pressed"]

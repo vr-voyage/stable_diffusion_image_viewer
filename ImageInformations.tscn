@@ -1,0 +1,102 @@
+[gd_scene load_steps=8 format=3 uid="uid://d4dqtgoa7ekde"]
+
+[ext_resource type="Script" path="res://ImageInformations.gd" id="1_pye0a"]
+[ext_resource type="StyleBox" uid="uid://efyg4yj2l7c0" path="res://BoxStyles/Img2TxtButtonStyle.tres" id="2_k363q"]
+[ext_resource type="PackedScene" uid="uid://cyeoy1w3okmv6" path="res://InfoDictionary.tscn" id="2_s8cx2"]
+[ext_resource type="StyleBox" path="res://BoxStyles/Img2TxtButtonStyleHover.tres" id="3_yyya1"]
+[ext_resource type="StyleBox" uid="uid://d1kc628f58cy3" path="res://BoxStyles/Img2TxtButtonStylePressed.tres" id="4_ahtq7"]
+[ext_resource type="PackedScene" uid="uid://chfnic0utpi3b" path="res://SDMetadataParser.tscn" id="6_agyal"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocb2m"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_color = Color(0.270588, 0.270588, 0.270588, 1)
+
+[node name="VBoxContainer" type="PanelContainer" node_paths=PackedStringArray("ui_error_unknown_format", "ui_error_no_sd_data", "ui_error_cant_retrieve_metadata", "ui_info_dictionary_data", "ui_command_line_button", "ui_sd_metadata_parser")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ocb2m")
+script = ExtResource("1_pye0a")
+ui_error_unknown_format = NodePath("MarginContainer/VBoxContainer/ErrorUnknownFormat")
+ui_error_no_sd_data = NodePath("MarginContainer/VBoxContainer/ErrorNotSD")
+ui_error_cant_retrieve_metadata = NodePath("MarginContainer/VBoxContainer/ErrorCannotGetMetadata")
+ui_info_dictionary_data = NodePath("MarginContainer/VBoxContainer/InfoDictionaryData")
+ui_command_line_button = NodePath("MarginContainer/VBoxContainer/CommandLineButton")
+ui_sd_metadata_parser = NodePath("SDMetadataParser")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_left = 2.0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 1142.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CommandLineButton" type="Button" parent="MarginContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2i(0, 16)
+offset_right = 1134.0
+offset_bottom = 39.0
+size_flags_vertical = 0
+focus_mode = 1
+theme_override_styles/normal = ExtResource("2_k363q")
+theme_override_styles/hover = ExtResource("3_yyya1")
+theme_override_styles/pressed = ExtResource("4_ahtq7")
+theme_override_styles/focus = ExtResource("4_ahtq7")
+disabled = true
+text = "Copy command line"
+
+[node name="ErrorUnknownFormat" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
+offset_top = 43.0
+offset_right = 1134.0
+offset_bottom = 69.0
+text = "Unknown File Format"
+
+[node name="ErrorCannotGetMetadata" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
+offset_top = 43.0
+offset_right = 1134.0
+offset_bottom = 69.0
+text = "Could not retrieve metadata"
+
+[node name="ErrorNotSD" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
+offset_top = 37.0
+offset_right = 1134.0
+offset_bottom = 63.0
+text = "No Metadata"
+
+[node name="InfoDictionaryData" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_s8cx2")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1134.0
+offset_bottom = 632.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_vertical = 3
+
+[node name="SDMetadataParser" parent="." instance=ExtResource("6_agyal")]
+offset_left = 2.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/CommandLineButton" to="." method="_on_txt_2_img_button_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CommandLineButton" to="." method="_txt_to_img_button_pressed"]

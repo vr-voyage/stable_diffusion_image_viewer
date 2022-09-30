@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct6jpmemuo6c2"]
+
+[ext_resource type="Script" path="res://PNGHelpersTester.gd" id="1_odvbj"]
+[ext_resource type="PackedScene" uid="uid://cyeoy1w3okmv6" path="res://InfoDictionary.tscn" id="2_eqy2v"]
+
+[node name="Control" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_odvbj")
+
+[node name="VBoxContainer" parent="." instance=ExtResource("2_eqy2v")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_vertical = 3
