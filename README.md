@@ -29,9 +29,9 @@ When not recognized, this just acts as a simple Image Viewer.
 
 # Navigation keys
 
-* Next PNG image in the same folder
+* Next PNG image in the same folder  
   `N`, `→`, `SPACE`, `ENTER`, `NUMPAD 6` and `WHEEL UP`
-* Previous PNG image in the same folder
+* Previous PNG image in the same folder  
   `P`, `←`, `BACKSPACE`, `NUMPAD 4` and `WHEEL DOWN`
 * Zoom IN  
   `CTRL + WHEEL UP`

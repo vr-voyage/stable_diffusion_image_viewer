@@ -41,6 +41,7 @@ func show_image(image_data:PackedByteArray):
 			ui_image.texture.update(image)
 		else:
 			ui_image.texture.set_image(image)
+			
 
 	_handle_picture_size()
 	ui_image_info.show_data(image_data)

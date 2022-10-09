@@ -7,6 +7,7 @@ var dictionary_item = load("res://InfoDictionaryItem.tscn")
 func clear() -> void:
 	for child in ui_list.get_children():
 		ui_list.remove_child(child)
+		child.queue_free()
 
 func show_dictionary(dictionary:Dictionary) -> void:
 	if dictionary == null:
