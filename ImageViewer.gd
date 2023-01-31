@@ -47,13 +47,12 @@ func show_image(image_data:PackedByteArray):
 	ui_image_info.show_data(image_data)
 
 func show_image_file(filepath:String):
-	var f:File = File.new()
-	var ret:int = f.open(filepath, File.READ)
-	if ret != OK:
-		printerr("Could not open %s .\nError code : %d" % [filepath, ret])
+	var file_content:PackedByteArray = FileAccess.get_file_as_bytes(filepath)
+	if file_content.is_empty():
+		printerr("Could not open %s .\nError code : %d" % [filepath, FileAccess.get_open_error()])
 		return
-	show_image(f.get_buffer(f.get_length()))
-	f.close()
+	show_image(file_content)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

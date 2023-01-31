@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://2oi0ii21sj7a"]
+
+[ext_resource type="Script" path="res://CurrentFileButton.gd" id="1_sr631"]
+
+[node name="TitleButton" type="Button"]
+text = "Stable Diffusion Image Viewer"
+flat = true
+script = ExtResource("1_sr631")
+
+[connection signal="pressed" from="." to="." method="_open_file_on_click"]

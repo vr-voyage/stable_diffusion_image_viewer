@@ -8,37 +8,9 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "Node",
-"class": &"PNGHelper",
-"language": &"GDScript",
-"path": "res://PNGHelper.gd"
-}, {
-"base": "Node",
-"class": &"SimpleHelpers",
-"language": &"GDScript",
-"path": "res://Helpers.gd"
-}, {
-"base": "Node",
-"class": &"StableDiffusionDataAUTOMATIC",
-"language": &"GDScript",
-"path": "res://StableDiffusionDataAUTOMATIC.gd"
-}, {
-"base": "Node",
-"class": &"StableDiffusionDataVoyage",
-"language": &"GDScript",
-"path": "res://StableDiffusionDataVoyage.gd"
-}]
-_global_script_class_icons={
-"PNGHelper": "",
-"SimpleHelpers": "",
-"StableDiffusionDataAUTOMATIC": "",
-"StableDiffusionDataVoyage": ""
-}
-
 [application]
 
 config/name="SDImageViewer"
 run/main_scene="res://main_ui.tscn"
-config/features=PackedStringArray("4.0", "Vulkan Clustered")
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b31fss78fbwsx"]
+[gd_scene load_steps=12 format=3 uid="uid://b31fss78fbwsx"]
 
 [ext_resource type="FontFile" uid="uid://blcfklfdxi1qo" path="res://Fonts/NotoSansCJKjp-Bold.otf" id="1_jgmoc"]
 [ext_resource type="PackedScene" uid="uid://dixkmi5hkalmh" path="res://ImageViewer.tscn" id="1_r80mi"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://dr6vqjsnync3i" path="res://Fonts/Blobmoji.ttf" id="2_m8d1i"]
 [ext_resource type="Texture2D" uid="uid://n6molrtm6w38" path="res://Icons/Kenney/gameicons/PNG/White/1x/backward.png" id="2_txai6"]
 [ext_resource type="Texture2D" uid="uid://bou2sxted5u6m" path="res://Icons/Kenney/gameicons/PNG/White/1x/forward.png" id="3_tagoi"]
+[ext_resource type="PackedScene" uid="uid://2oi0ii21sj7a" path="res://CurrentFileButton.tscn" id="5_lvx4b"]
 
 [sub_resource type="SystemFont" id="SystemFont_41yga"]
 subpixel_positioning = 0
@@ -13,6 +14,12 @@ fallbacks = [ExtResource("1_jgmoc"), ExtResource("2_m8d1i")]
 
 [sub_resource type="Theme" id="Theme_1r582"]
 default_font = SubResource("SystemFont_41yga")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uosrk"]
 bg_color = Color(0, 0, 0, 1)
@@ -26,7 +33,7 @@ content_margin_bottom = 0.0
 bg_color = Color(0.133333, 0.133333, 0.133333, 1)
 corner_detail = 1
 
-[node name="MainUI" type="Panel" node_paths=PackedStringArray("ui_image_viewer", "ui_button_next_image", "ui_button_previous_image")]
+[node name="MainUI" type="Panel" node_paths=PackedStringArray("ui_image_viewer", "ui_button_next_image", "ui_button_previous_image", "ui_button_current_file")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -35,8 +42,9 @@ grow_vertical = 2
 theme = SubResource("Theme_1r582")
 script = ExtResource("1_vriff")
 ui_image_viewer = NodePath("VBox/Control")
-ui_button_next_image = NodePath("VBox/Panel/MarginContainer/HBoxContainer/PreviousImage")
-ui_button_previous_image = NodePath("VBox/Panel/MarginContainer/HBoxContainer/NextImage")
+ui_button_next_image = NodePath("VBox/Panel/MarginContainer/HBoxContainer/NextImage")
+ui_button_previous_image = NodePath("VBox/Panel/MarginContainer/HBoxContainer/PreviousImage")
+ui_button_current_file = NodePath("VBox/Panel/MarginContainer/HBoxContainer/HBoxContainer/TitleButton")
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -47,10 +55,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="VBox"]
-custom_minimum_size = Vector2i(0, 48)
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
-offset_right = 1152.0
-offset_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_uosrk")
@@ -67,20 +73,12 @@ theme_override_constants/margin_right = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBox/Panel/MarginContainer"]
 layout_mode = 2
-offset_left = 16.0
-offset_right = 1136.0
-offset_bottom = 48.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 
 [node name="PreviousImage" type="TextureButton" parent="VBox/Panel/MarginContainer/HBoxContainer"]
 modulate = Color(0.0980392, 0.0980392, 0.0980392, 1)
-custom_minimum_size = Vector2i(32, 32)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-offset_top = 8.0
-offset_right = 32.0
-offset_bottom = 40.0
 size_flags_vertical = 4
 disabled = true
 texture_normal = ExtResource("2_txai6")
@@ -89,28 +87,16 @@ stretch_mode = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBox/Panel/MarginContainer/HBoxContainer"]
 layout_mode = 2
-offset_left = 36.0
-offset_right = 1084.0
-offset_bottom = 48.0
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="MenuButton" type="Label" parent="VBox/Panel/MarginContainer/HBoxContainer/HBoxContainer"]
+[node name="TitleButton" parent="VBox/Panel/MarginContainer/HBoxContainer/HBoxContainer" instance=ExtResource("5_lvx4b")]
 layout_mode = 2
-offset_left = 408.0
-offset_top = 11.0
-offset_right = 640.0
-offset_bottom = 37.0
-text = "Stable Diffusion Image Viewer"
 
 [node name="NextImage" type="TextureButton" parent="VBox/Panel/MarginContainer/HBoxContainer"]
 modulate = Color(0.0980392, 0.0980392, 0.0980392, 1)
-custom_minimum_size = Vector2i(32, 32)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-offset_left = 1088.0
-offset_top = 8.0
-offset_right = 1120.0
-offset_bottom = 40.0
 size_flags_vertical = 4
 disabled = true
 texture_normal = ExtResource("3_tagoi")
@@ -119,14 +105,6 @@ stretch_mode = 0
 
 [node name="Control" parent="VBox" instance=ExtResource("1_r80mi")]
 layout_mode = 2
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_top = 52.0
-offset_right = 1152.0
-offset_bottom = 648.0
-grow_horizontal = 1
-grow_vertical = 1
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_icec3")
 

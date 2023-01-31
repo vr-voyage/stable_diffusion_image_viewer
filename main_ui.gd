@@ -5,25 +5,33 @@ extends Panel
 @export var ui_button_next_image:TextureButton
 @export var ui_button_previous_image:TextureButton
 
+@export var ui_button_current_file:Button
+
 var directory_files:PackedStringArray = PackedStringArray()
 
 func report_error(message:String):
 	printerr(message)
 
 func _list_files_by_extension(dirpath:String, extension:String, out_list:PackedStringArray) -> int:
-	var directory_browser:Directory = Directory.new()
-	var ret:int = directory_browser.open(dirpath)
-	if ret != OK:
-		report_error("Could not open directory %s" % dirpath)
+	# TODO
+	# DirAccess now supports for get_files_at
+	# I might use that in the future, since even with a very big folder, we're
+	# speaking about a few megabytes of data in memory, at most.
+	var ret:int = OK
+	var directory_browser:DirAccess = DirAccess.open(dirpath)
+	if not directory_browser:
+		ret = DirAccess.get_open_error()
+		report_error("Could not open directory %s. Code : %d" % [dirpath, ret])
 		return ret
 
-	var next_file:String = "a"
+
 	ret = directory_browser.list_dir_begin()
 	if ret != OK:
 		report_error("Could not list files in %s" % dirpath)
 		return ret
 
 	var directory_separator:String = "\\" if OS.get_name() == "Windows" else "/"
+	var next_file:String = "a"
 
 	while next_file != "":
 		next_file = directory_browser.get_next()
@@ -69,7 +77,7 @@ func _start_navigation_from(filepath:String):
 		_stop_navigation()
 
 func show_file(image_file_path:String):
-	ui_image_viewer.show_image_file(image_file_path)
+	_show_image_file(image_file_path)
 	_start_navigation_from(image_file_path)
 
 func _handle_files_drop(filepaths:PackedStringArray):
@@ -98,8 +106,12 @@ func _ready():
 func _current_file() -> String:
 	return directory_files[current_index]
 
+func _show_image_file(filepath:String):
+	ui_image_viewer.show_image_file(filepath)
+	ui_button_current_file.showing_file(filepath)
+
 func _show_current_file():
-	ui_image_viewer.show_image_file(_current_file())
+	_show_image_file(_current_file())
 
 func _show_previous_file():
 	current_index -= 1

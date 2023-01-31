@@ -26,12 +26,12 @@ const sampler_name_to_code:Dictionary = {
 static func _appears_valid(metadata:Dictionary):
 	return metadata.has("parameters")
 
-static func _dict_string_to_dict(str:String, key_delimiter:String = ":", space_delimiter:String = ",") -> Dictionary:
+static func _dict_string_to_dict(dict_str:String, key_delimiter:String = ":", space_delimiter:String = ",") -> Dictionary:
 	var dict:Dictionary = {}
-	if str == null:
+	if dict_str == null:
 		return dict
 
-	for part in str.split(space_delimiter, false):
+	for part in dict_str.split(space_delimiter, false):
 		var key_value:PackedStringArray = part.split(key_delimiter, false)
 		if len(key_value) != 2:
 			continue

@@ -47,7 +47,7 @@ grow_vertical = 2
 
 [node name="CommandLineButton" type="Button" parent="MarginContainer/VBoxContainer"]
 visible = false
-custom_minimum_size = Vector2i(0, 16)
+custom_minimum_size = Vector2(0, 16)
 offset_right = 1134.0
 offset_bottom = 39.0
 size_flags_vertical = 0
